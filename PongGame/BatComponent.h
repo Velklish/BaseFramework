@@ -1,17 +1,17 @@
 #pragma once
-#include "GameComponent.h"
+#include "Framework/GameComponent.h"
 #include "SimpleMath.h"
 #include "d3d11.h"
 #include "wrl.h"
 
-namespace BaseFramework
+namespace PongGame
 {
-	class BatComponent : public GameComponent
+	class BatComponent : public BaseFramework::GameComponent
 	{
 	public:
 		// Inherited via GameComponent
 		BatComponent(float sizeX, float sizeY, float posX, float posY);
-		void Initialize(IGame* game) override;
+		void Initialize(BaseFramework::IGame* game) override;
 		void Update() override;
 		void Draw() override;
 		void Translate(float x, float y);
@@ -22,7 +22,7 @@ namespace BaseFramework
 	private:
 		DirectX::SimpleMath::Vector2 velocity = {0.02f,0.02f};
 		DirectX::SimpleMath::Vector2 size {};
-		IGame* instance;
+		BaseFramework::IGame* instance;
 		std::vector<DirectX::SimpleMath::Vector2> vertices{};
 		std::vector<int> indices{};
 

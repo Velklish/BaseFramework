@@ -1,8 +1,8 @@
-#include "pch.h"
+#include "Framework/pch.h"
 
 #include "FPSCamera.h"
-#include "Window.h"
-#include "IGame.h"
+#include "Framework/Window.h"
+#include "Framework/IGame.h"
 
 using namespace DirectX;
 using namespace SimpleMath;

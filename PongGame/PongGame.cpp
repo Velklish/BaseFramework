@@ -1,17 +1,17 @@
 #include "PongGame.h"
-#include "Window.h"
-#include "Graphics.h"
+#include "Framework/Window.h"
+#include "Framework/Graphics.h"
 
 using namespace BaseFramework;
 
-PongGame::PongGame()
+PongGame::PongGame::PongGame()
 {
 	this->playerBat = new BatComponent(0.7f, 0.08f, 0.0f, -0.95f);
 	this->enemyBat = new BatComponent(0.7f, 0.08f, 0.0f, 0.95f);
 	this->ball = new BallComponent(0.06f,0.06f,0.0f,0.0f);
 }
 
-void PongGame::Initialize(int width, int height, LPCWSTR name)
+void PongGame::PongGame::Initialize(int width, int height, LPCWSTR name)
 {
 	this->window = new Window(width, height, L"Pong", this);
 	this->gfx = new Graphics(width, height, window->GetHwnd());
@@ -37,7 +37,7 @@ void PongGame::Initialize(int width, int height, LPCWSTR name)
 	this->window->InitializeMessageLoop();
 }
 
-void PongGame::Update(DX::StepTimer const& timer)
+void PongGame::PongGame::Update(DX::StepTimer const& timer)
 {
 	HandleInput();
 
@@ -52,7 +52,7 @@ void PongGame::Update(DX::StepTimer const& timer)
 	}
 }
 
-void PongGame::Render()
+void PongGame::PongGame::Render()
 {
 	gfx->ClearBuffer();
 
@@ -63,7 +63,7 @@ void PongGame::Render()
 	gfx->Present();
 }
 
-void PongGame::Tick()
+void PongGame::PongGame::Tick()
 {
 	m_timer.Tick([&]()
 		{
@@ -73,19 +73,19 @@ void PongGame::Tick()
 	Render();
 }
 
-void PongGame::ClearResources()
+void PongGame::PongGame::ClearResources()
 {
 	for (auto comp : components) {
 		comp->ClearResources();
 	}
 }
 
-PongGame::~PongGame()
+PongGame::PongGame::~PongGame()
 {
-	PongGame::ClearResources();
+	PongGame::PongGame::ClearResources();
 }
 
-void PongGame::HandleInput()
+void PongGame::PongGame::HandleInput()
 {
 	auto time = static_cast<float>(m_timer.GetTotalSeconds());
 	auto kb = keyboard->GetState();
@@ -112,5 +112,4 @@ void PongGame::HandleInput()
 		ball->Launch();
 	}
 }
-
 

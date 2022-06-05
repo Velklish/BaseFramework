@@ -3,17 +3,14 @@
 #include <d3dcompiler.h>
 #include <iterator>
 
-#include "Graphics.h"
-#include "IGame.h"
+#include "Framework/Graphics.h"
+#include "Framework/IGame.h"
 
 using namespace DirectX::SimpleMath;
 
-BaseFramework::CubeComponent::CubeComponent(float size) : size(size)
-{
-    
-}
+SolarGame::CubeComponent::CubeComponent(float size) : size(size){}
 
-void BaseFramework::CubeComponent::Initialize(IGame* game)
+void SolarGame::CubeComponent::Initialize(BaseFramework::IGame* game)
 {
     this->instance = game;
 
@@ -109,7 +106,7 @@ void BaseFramework::CubeComponent::Initialize(IGame* game)
     device->CreateInputLayout(inputElements, std::size(inputElements), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
 }
 
-void BaseFramework::CubeComponent::Update(Matrix m_world, Matrix m_view, Matrix m_proj)
+void SolarGame::CubeComponent::Update(Matrix m_world, Matrix m_view, Matrix m_proj)
 {
     this->m_view = m_view;
     this->m_proj = m_proj;
@@ -117,7 +114,7 @@ void BaseFramework::CubeComponent::Update(Matrix m_world, Matrix m_view, Matrix 
     tempMatrix = Matrix::Identity;
 }
 
-void BaseFramework::CubeComponent::Draw()
+void SolarGame::CubeComponent::Draw()
 {
     auto graphics = instance->GetGfx();
     auto device = graphics->GetDevice();
@@ -156,11 +153,11 @@ void BaseFramework::CubeComponent::Draw()
     context->DrawIndexed((UINT)std::size(indices), 0u, 0u);
 }
 
-void BaseFramework::CubeComponent::ClearResources()
+void SolarGame::CubeComponent::ClearResources()
 {
 }
 
-void BaseFramework::CubeComponent::Rotate(RotDirection direction, float angle)
+void SolarGame::CubeComponent::Rotate(RotDirection direction, float angle)
 {
     switch (direction)
     {
@@ -170,7 +167,7 @@ void BaseFramework::CubeComponent::Rotate(RotDirection direction, float angle)
     }
 }
 
-void BaseFramework::CubeComponent::Translate(float x, float y, float z)
+void SolarGame::CubeComponent::Translate(float x, float y, float z)
 {
     tempMatrix *= Matrix::CreateTranslation(x, y, z);
 }

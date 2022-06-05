@@ -1,13 +1,13 @@
 #include "SolarGame.h"
-#include "Window.h"
-#include "Graphics.h"
+#include "Framework/Window.h"
+#include "Framework/Graphics.h"
 
 using namespace DirectX::SimpleMath;
 
-void BaseFramework::SolarGame::Initialize(int width, int height, LPCWSTR name)
+void SolarGame::SolarGame::Initialize(int width, int height, LPCWSTR name)
 {
-	this->window = new Window(width, height, L"Pong", this);
-	this->gfx = new Graphics(width, height, window->GetHwnd());
+	this->window = new BaseFramework::Window(width, height, L"Pong", this);
+	this->gfx = new BaseFramework::Graphics(width, height, window->GetHwnd());
 	this->sphere = new SphereComponent();
 	this->grid = new GridComponent();
 	
@@ -21,8 +21,8 @@ void BaseFramework::SolarGame::Initialize(int width, int height, LPCWSTR name)
 	keyboard = std::make_unique<DirectX::Keyboard>();
 	mouse = std::make_unique<DirectX::Mouse>();
 
-	this->fpsCamera = new FPSCamera(this, keyboard, mouse);
-	this->orbitalCamera = new OrbitalCamera(this, keyboard, mouse);
+	this->fpsCamera = new BaseFramework::FPSCamera(this, keyboard, mouse);
+	this->orbitalCamera = new BaseFramework::OrbitalCamera(this, keyboard, mouse);
 	this->grid->Initialize(this);
 	this->sphere->Initialize(this);
 
@@ -33,7 +33,7 @@ void BaseFramework::SolarGame::Initialize(int width, int height, LPCWSTR name)
 	this->window->InitializeMessageLoop();
 }
 
-void BaseFramework::SolarGame::Update(DX::StepTimer const& timer)
+void SolarGame::SolarGame::Update(BaseFramework::DX::StepTimer const& timer)
 {
 	auto time = static_cast<float>(timer.GetTotalSeconds());
 
@@ -55,31 +55,31 @@ void BaseFramework::SolarGame::Update(DX::StepTimer const& timer)
 	grid->Update(m_view, m_proj);
 	
 	auto baseComp = components.at(0);
-	components.at(0)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(0)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(0)->Update(m_world, m_view, m_proj);
 
 	components.at(1)->Translate(0, 0, 3);
-	components.at(1)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(1)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(1)->Update(components.at(0)->GetWorld(), m_view, m_proj);
 
 	components.at(2)->Translate(-3, 0, 0);
-	components.at(2)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(2)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(2)->Update(components.at(0)->GetWorld(), m_view, m_proj);
 
 	components.at(3)->Translate(0, 0, -3);
-	components.at(3)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(3)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(3)->Update(components.at(0)->GetWorld(), m_view, m_proj);
 	
 	components.at(4)->Translate(3, 0, 0);
-	components.at(4)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(4)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(4)->Update(components.at(0)->GetWorld(), m_view, m_proj);
 	
 	
-	components.at(5)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(5)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(5)->Translate(-1, 0, 0);
 	components.at(5)->Update(components.at(3)->GetWorld(), m_view, m_proj);
 	components.at(6)->Translate(1, 0, 0);
-	components.at(6)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
+	components.at(6)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(6)->Update(components.at(3)->GetWorld(), m_view, m_proj);
 
 	/*components.at(0)->Rotate(XYZGameComponent::RotDirection::Y, time * 40.f);
@@ -101,7 +101,7 @@ void BaseFramework::SolarGame::Update(DX::StepTimer const& timer)
 	}*/
 }
 
-void BaseFramework::SolarGame::Render()
+void SolarGame::SolarGame::Render()
 {
 	gfx->ClearBuffer();
 
@@ -114,7 +114,7 @@ void BaseFramework::SolarGame::Render()
 	gfx->Present();
 }
 
-void BaseFramework::SolarGame::Tick()
+void SolarGame::SolarGame::Tick()
 {
 	m_timer.Tick([&]()
 		{
@@ -124,13 +124,13 @@ void BaseFramework::SolarGame::Tick()
 	Render();
 }
 
-void BaseFramework::SolarGame::ClearResources()
+void SolarGame::SolarGame::ClearResources()
 {
 	for (auto comp : components) {
 		comp->ClearResources();
 	}
 }
 
-void BaseFramework::SolarGame::HandleInput()
+void SolarGame::SolarGame::HandleInput()
 {
 }

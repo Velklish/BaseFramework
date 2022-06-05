@@ -30,43 +30,43 @@
     <ClCompile Include="BaseFramework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BatComponent.cpp">
-      <Filter>PongGame</Filter>
+    <ClCompile Include="Framework\FPSCamera.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BallComponent.cpp">
-      <Filter>PongGame</Filter>
+    <ClCompile Include="Framework\Graphics.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FPSCamera.cpp">
-      <Filter>Framework</Filter>
+    <ClCompile Include="Framework\OrbitalCamera.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics.cpp">
-      <Filter>Framework</Filter>
+    <ClCompile Include="Framework\Window.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Framework</Filter>
+    <ClCompile Include="Framework\XYZGameComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PongGame.cpp">
-      <Filter>PongGame</Filter>
+    <ClCompile Include="PongGame\BallComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SolarGame.cpp">
-      <Filter>SolarSystem</Filter>
+    <ClCompile Include="PongGame\BatComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SphereComponent.cpp">
-      <Filter>SolarSystem</Filter>
+    <ClCompile Include="PongGame\PongGame.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OrbitalCamera.cpp">
-      <Filter>SolarSystem</Filter>
+    <ClCompile Include="SolarGame\CubeComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CubeComponent.cpp">
-      <Filter>SolarSystem</Filter>
+    <ClCompile Include="SolarGame\GridComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GridComponent.cpp">
-      <Filter>SolarSystem</Filter>
+    <ClCompile Include="SolarGame\NewCube.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="XYZGameComponent.cpp">
-      <Filter>SolarSystem</Filter>
+    <ClCompile Include="SolarGame\SolarGame.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NewCube.cpp">
+    <ClCompile Include="SolarGame\SphereComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,73 +74,63 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BallComponent.h">
-      <Filter>PongGame</Filter>
+    <ClInclude Include="Framework\Forward.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BatComponent.h">
-      <Filter>PongGame</Filter>
+    <ClInclude Include="Framework\FPSCamera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameComponent.h">
-      <Filter>PongGame</Filter>
+    <ClInclude Include="Framework\GameComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Forward.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\Graphics.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FPSCamera.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\IGame.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\OrbitalCamera.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IGame.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\pch.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\StepTimer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StepTimer.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\Window.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Framework</Filter>
+    <ClInclude Include="Framework\XYZGameComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PongGame.h">
-      <Filter>PongGame</Filter>
+    <ClInclude Include="PongGame\BallComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CubeComponent.h">
-      <Filter>SolarSystem</Filter>
+    <ClInclude Include="PongGame\BatComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GridComponent.h">
-      <Filter>SolarSystem</Filter>
+    <ClInclude Include="PongGame\PongGame.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrbitalCamera.h">
-      <Filter>SolarSystem</Filter>
+    <ClInclude Include="SolarGame\CubeComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SolarGame.h">
-      <Filter>SolarSystem</Filter>
+    <ClInclude Include="SolarGame\GridComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SphereComponent.h">
-      <Filter>SolarSystem</Filter>
+    <ClInclude Include="SolarGame\NewCube.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="XYZGameComponent.h">
-      <Filter>SolarSystem</Filter>
+    <ClInclude Include="SolarGame\SolarGame.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NewCube.h">
+    <ClInclude Include="SolarGame\SphereComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="PS_Phong.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_Phong.hlsl">
-      <Filter>Shaders</Filter>
-    </FxCompile>
+    <FxCompile Include="Shaders\PixelShader.hlsl" />
+    <FxCompile Include="Shaders\VertexShader.hlsl" />
   </ItemGroup>
 </Project>

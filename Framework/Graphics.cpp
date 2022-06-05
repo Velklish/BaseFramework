@@ -1,5 +1,5 @@
-#include "Graphics.h"
-#include "pch.h"
+#include "Framework/Graphics.h"
+#include "Framework/pch.h"
 
 using namespace BaseFramework;
 

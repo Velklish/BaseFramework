@@ -1,6 +1,5 @@
 #pragma once
 #include "Forward.h"
-#include <memory>
 
 namespace BaseFramework {
 	class Window
@@ -11,7 +10,7 @@ namespace BaseFramework {
 		void GetSize(int& width, int& height);
 		HWND GetHwnd() { return hwnd; };
 	private:
-		BaseFramework::IGame* instance = nullptr;
+		IGame* instance = nullptr;
 		HWND hwnd = nullptr;
 		int width;
 		int height;

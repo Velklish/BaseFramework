@@ -1,12 +1,11 @@
 ﻿#include "BallComponent.h"
 
-#include "d3d11.h"
-#include "IGame.h"
-#include "Graphics.h"
-#include "Window.h"
+#include "Framework/IGame.h"
+#include "Framework/Graphics.h"
+#include "Framework/Window.h"
 #include <d3dcompiler.h>
 
-#include "pch.h"
+#include "Framework/pch.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
@@ -14,13 +13,13 @@
 using namespace DirectX::SimpleMath;
 using namespace BaseFramework;
 
-BallComponent::BallComponent(float sizeX, float sizeY, float posX, float posY)
+PongGame::BallComponent::BallComponent(float sizeX, float sizeY, float posX, float posY)
     : position(posX, posY)
      ,size(sizeX, sizeY)
 {
 }
 
-void BallComponent::Initialize(IGame* game)
+void PongGame::BallComponent::Initialize(IGame* game)
 {
     this->instance = game;
 	
@@ -94,7 +93,7 @@ void BallComponent::Initialize(IGame* game)
 	Reset();
 }
 
-void BallComponent::Update()
+void PongGame::BallComponent::Update()
 {
 	if(abs(position.y) > 1)
 	{
@@ -126,7 +125,7 @@ void BallComponent::Update()
 				* Matrix::CreateScale(4.0f/3.0f,1,1);
 }
 
-void BallComponent::Draw()
+void PongGame::BallComponent::Draw()
 {
 	auto graphics = instance->GetGfx();
 	auto device = graphics->GetDevice();
@@ -162,11 +161,11 @@ void BallComponent::Draw()
 	context->DrawIndexed((UINT)std::size(indices), 0u, 0u);
 }
 
-void BallComponent::ClearResources()
+void PongGame::BallComponent::ClearResources()
 {
 }
 
-void BallComponent::Bounce(BounceDirection dir)
+void PongGame::BallComponent::Bounce(BounceDirection dir)
 {
 	switch(dir)
 	{
@@ -198,13 +197,13 @@ void BallComponent::Bounce(BounceDirection dir)
 	collision.y = newColisY;
 }
 
-void BallComponent::Launch()
+void PongGame::BallComponent::Launch()
 {
 	velocity.x = 0.0f;
 	velocity.y = 0.015f;
 }
 
-void BallComponent::Reset()
+void PongGame::BallComponent::Reset()
 {
 	position.x = 0;
 	position.y = 0;

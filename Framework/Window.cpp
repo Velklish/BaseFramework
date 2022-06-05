@@ -1,8 +1,8 @@
-#include "pch.h"
-#include "Window.h"
+#include "Framework/pch.h"
+#include "Framework/Window.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "IGame.h"
+#include "Framework/IGame.h"
 
 using namespace DirectX;
 using namespace BaseFramework;

@@ -6,20 +6,20 @@
 #include "Effects.h"
 #include "PrimitiveBatch.h"
 
-#include "XYZGameComponent.h"
+#include "Framework/XYZGameComponent.h"
 
-namespace BaseFramework
+namespace SolarGame
 {
     class GridComponent
     {
     public:
-        void Initialize(IGame* game, float size = 4.0f);
+        void Initialize(BaseFramework::IGame* game, float size = 4.0f);
         void Update(DirectX::SimpleMath::Matrix m_view,
             DirectX::SimpleMath::Matrix m_proj);
         void Draw();
         void ClearResources();
     private:
-        IGame* instance;
+        BaseFramework::IGame* instance;
         float size;
 		
         std::unique_ptr<DirectX::CommonStates> m_states;

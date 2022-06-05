@@ -3,16 +3,16 @@
 #include <GeometricPrimitive.h>
 #include <wrl/client.h>
 
-#include "XYZGameComponent.h"
+#include "Framework/XYZGameComponent.h"
 
-namespace BaseFramework
+namespace SolarGame
 {
-	class CubeComponent : public XYZGameComponent
+	class CubeComponent : public BaseFramework::XYZGameComponent
 	{
 	public:
 		// Inherited via XYZGameComponent
 		CubeComponent(float size = 1.0f);
-		void Initialize(IGame* game) override;
+		void Initialize(BaseFramework::IGame* game) override;
 		void Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view, DirectX::SimpleMath::Matrix m_proj) override;
 		void Draw() override;
 		void ClearResources() override;
@@ -20,7 +20,7 @@ namespace BaseFramework
 		void Rotate(RotDirection direction, float angle) override;
 		void Translate(float x, float y, float z) override;
 	private:
-		IGame* instance;
+		BaseFramework::IGame* instance;
 		float size = 1.0f;
 		
 		DirectX::SimpleMath::Matrix tempMatrix = DirectX::SimpleMath::Matrix::Identity;

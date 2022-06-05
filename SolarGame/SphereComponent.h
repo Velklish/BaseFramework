@@ -2,15 +2,15 @@
 #include <d3d11.h>
 #include <SimpleMath.h>
 #include <GeometricPrimitive.h>
-#include "XYZGameComponent.h"
+#include "Framework/XYZGameComponent.h"
 
-namespace BaseFramework 
+namespace SolarGame
 {
-	class SphereComponent : public XYZGameComponent
+	class SphereComponent : public BaseFramework::XYZGameComponent
 	{
 	public:
 		// Inherited via XYZGameComponent
-		void Initialize(IGame* game) override;
+		void Initialize(BaseFramework::IGame* game) override;
 		void Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view, DirectX::SimpleMath::Matrix m_proj) override;
 		void Draw() override;
 		void ClearResources() override;
@@ -18,7 +18,7 @@ namespace BaseFramework
 		void Rotate(RotDirection direction, float angle) override;
 		void Translate(float x, float y, float z) override;
 	private:
-		IGame* instance;
+		BaseFramework::IGame* instance;
 
 		DirectX::SimpleMath::Matrix tempMatrix = DirectX::SimpleMath::Matrix::Identity;
 		

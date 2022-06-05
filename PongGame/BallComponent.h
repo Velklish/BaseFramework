@@ -1,12 +1,12 @@
 ﻿#pragma once
-#include "GameComponent.h"
+#include "Framework/GameComponent.h"
 #include "SimpleMath.h"
 #include "d3d11.h"
 #include "wrl.h"
 
-namespace BaseFramework
+namespace PongGame
 {
-    class BallComponent : public GameComponent
+    class BallComponent : public BaseFramework::GameComponent
     {
     public:
         enum BounceDirection
@@ -16,7 +16,7 @@ namespace BaseFramework
         };
         
         BallComponent(float sizeX, float sizeY, float posX, float posY);
-        void Initialize(IGame* game) override;
+        void Initialize(BaseFramework::IGame* game) override;
         void Update() override;
         void Draw() override;
 
@@ -40,7 +40,7 @@ namespace BaseFramework
         int screenWidth;
         int screenHeight;
 
-        IGame* instance;
+        BaseFramework::IGame* instance;
         
         Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer = nullptr;
         Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixelShader = nullptr;

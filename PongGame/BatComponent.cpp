@@ -1,11 +1,10 @@
 #include "BatComponent.h"
-#include "d3d11.h"
-#include "IGame.h"
-#include "Graphics.h"
-#include "Window.h"
+#include "Framework/IGame.h"
+#include "Framework/Graphics.h"
+#include "Framework/Window.h"
 #include <d3dcompiler.h>
 
-#include "pch.h"
+#include "Framework/pch.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
@@ -13,13 +12,13 @@
 using namespace DirectX::SimpleMath;
 using namespace BaseFramework;
 
-BatComponent::BatComponent(float sizeX, float sizeY, float posX, float posY)
+PongGame::BatComponent::BatComponent(float sizeX, float sizeY, float posX, float posY)
 	: position(posX, posY),
 	size(sizeX, sizeY)
 {
 }
 
-void BatComponent::Initialize(IGame* game)
+void PongGame::BatComponent::Initialize(IGame* game)
 {
     this->instance = game;
 	
@@ -35,10 +34,7 @@ void BatComponent::Initialize(IGame* game)
 		Vector2(-(size.x/2), (size.y/2)),
 		Vector2((size.x/2), -(size.y/2)),
 		Vector2((size.x/2), (size.y/2)),
-        
 	};
-
-	//create vertex buffer
 
 	D3D11_BUFFER_DESC bDesc;
 	bDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -91,12 +87,12 @@ void BatComponent::Initialize(IGame* game)
 	collision.height = size.y * screenHeight / 2;
 }
 
-void BatComponent::Update()
+void PongGame::BatComponent::Update()
 {
     transform = Matrix::CreateTranslation(Vector3(position.x, position.y, 0)).Transpose();
 }
 
-void BatComponent::Draw()
+void PongGame::BatComponent::Draw()
 {
     auto graphics = instance->GetGfx();
     auto device = graphics->GetDevice();
@@ -135,7 +131,7 @@ void BatComponent::Draw()
     context->DrawIndexed((UINT)std::size(indices), 0u, 0u);
 }
 
-void BatComponent::Translate(float x, float y)
+void PongGame::BatComponent::Translate(float x, float y)
 {
 	auto newPosX = position.x + x * velocity.x;
 	auto newPosY = position.y + y * velocity.y;
@@ -157,6 +153,6 @@ void BatComponent::Translate(float x, float y)
 	collision.y = newColisY;
 }
 
-void BatComponent::ClearResources()
+void PongGame::BatComponent::ClearResources()
 {
 }
