@@ -1,4 +1,4 @@
-﻿#include "GridComponent.h"
+﻿#include "Framework/GridComponent.h"
 
 #include "Framework/Graphics.h"
 #include <DirectXHelpers.h>
@@ -8,7 +8,7 @@
 using namespace DirectX;
 using namespace SimpleMath;
 
-void SolarGame::GridComponent::Initialize(BaseFramework::IGame* game, float size)
+void BaseFramework::GridComponent::Initialize(BaseFramework::IGame* game, float size)
 {
     this->instance = game;
     this->size = size;
@@ -35,7 +35,7 @@ void SolarGame::GridComponent::Initialize(BaseFramework::IGame* game, float size
     m_effect->SetProjection(m_proj);
 }
 
-void SolarGame::GridComponent::Update(Matrix m_view,
+void BaseFramework::GridComponent::Update(Matrix m_view,
     Matrix m_proj)
 {
     this->m_view = m_view;
@@ -45,7 +45,7 @@ void SolarGame::GridComponent::Update(Matrix m_view,
     m_effect->SetProjection(m_proj);
 }
 
-void SolarGame::GridComponent::Draw()
+void BaseFramework::GridComponent::Draw()
 {
     auto context = this->instance->GetGfx()->GetContext();
     context->OMSetBlendState(m_states->Opaque(), nullptr, 0xFFFFFFFF);
@@ -92,6 +92,6 @@ void SolarGame::GridComponent::Draw()
     m_batch->End();
 }
 
-void SolarGame::GridComponent::ClearResources()
+void BaseFramework::GridComponent::ClearResources()
 {
 }

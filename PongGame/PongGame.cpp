@@ -35,9 +35,11 @@ void PongGame::PongGame::Initialize(int width, int height, LPCWSTR name)
 	collision.height = height;
 	
 	this->window->InitializeMessageLoop();
+	this->m_timer.SetFixedTimeStep(true);
+	this->m_timer.SetTargetElapsedSeconds(1.0 / 144);
 }
 
-void PongGame::PongGame::Update(DX::StepTimer const& timer)
+void PongGame::PongGame::Update(BaseFramework::DX::StepTimer const& timer)
 {
 	HandleInput();
 

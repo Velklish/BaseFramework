@@ -20,7 +20,7 @@ void SolarGame::CubeComponent::Initialize(BaseFramework::IGame* game)
     auto target = graphics->GetTarget();
     auto dsv = graphics->GetDSV();
 
-    const Vector3 vertices[] =
+    std::vector<Vector3> vertices =
     {
         {-size, -size, -size},
         {size, -size, -size},
@@ -37,11 +37,11 @@ void SolarGame::CubeComponent::Initialize(BaseFramework::IGame* game)
     bDesc.Usage = D3D11_USAGE_DEFAULT;
     bDesc.CPUAccessFlags = 0u;
     bDesc.MiscFlags = 0u;
-    bDesc.ByteWidth = sizeof vertices;
+    bDesc.ByteWidth = sizeof(Vector3) * std::size(vertices);
     bDesc.StructureByteStride = sizeof Vector3;
 
     D3D11_SUBRESOURCE_DATA sd = {};
-    sd.pSysMem = vertices;
+    sd.pSysMem = vertices.data();
     sd.SysMemPitch = 0;
     sd.SysMemSlicePitch = 0;
 
@@ -130,7 +130,7 @@ void SolarGame::CubeComponent::Draw()
     Matrix cb =
     {
         (m_world * m_view * m_proj).Transpose()
-};
+    };
 
     Microsoft::WRL::ComPtr<ID3D11Buffer> pConstBuffer;
     D3D11_BUFFER_DESC cbd = {};

@@ -8,18 +8,18 @@
 
 #include "Framework/XYZGameComponent.h"
 
-namespace SolarGame
+namespace BaseFramework
 {
     class GridComponent
     {
     public:
-        void Initialize(BaseFramework::IGame* game, float size = 4.0f);
+        void Initialize(IGame* game, float size = 4.0f);
         void Update(DirectX::SimpleMath::Matrix m_view,
             DirectX::SimpleMath::Matrix m_proj);
         void Draw();
         void ClearResources();
     private:
-        BaseFramework::IGame* instance;
+        IGame* instance;
         float size;
 		
         std::unique_ptr<DirectX::CommonStates> m_states;

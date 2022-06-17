@@ -174,11 +174,11 @@ void PongGame::BallComponent::Bounce(BounceDirection dir)
 			velocity.y = - velocity.y;
 			if(velocity.x > 0)
 			{
-				velocity.x += 0.01;
+				velocity.x += 0.001;
 			}
 			else
 			{
-				velocity.x -= 0.01;
+				velocity.x -= 0.001;
 			}
 		} break;
 	case Horizontal: velocity.x = -velocity.x; break;

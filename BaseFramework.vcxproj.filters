@@ -42,9 +42,6 @@
     <ClCompile Include="Framework\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Framework\XYZGameComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PongGame\BallComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,16 +54,28 @@
     <ClCompile Include="SolarGame\CubeComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SolarGame\GridComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SolarGame\NewCube.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SolarGame\SolarGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SolarGame\SphereComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\GridComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightGame\LightGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightGame\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightGame\Color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightGame\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LightGame\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,21 +125,38 @@
     <ClInclude Include="SolarGame\CubeComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SolarGame\GridComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SolarGame\NewCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SolarGame\SolarGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SolarGame\SphereComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\GridComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGame\LightGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGame\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGame\Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGame\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGame\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LightGame\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\PixelShader.hlsl" />
     <FxCompile Include="Shaders\VertexShader.hlsl" />
+    <FxCompile Include="Shaders\PSModel.hlsl" />
+    <FxCompile Include="Shaders\VSModel.hlsl" />
   </ItemGroup>
 </Project>

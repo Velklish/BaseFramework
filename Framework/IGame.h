@@ -1,6 +1,6 @@
 #pragma once
 #include "Forward.h"
-#include "Windows.h"
+#include "pch.h"
 #include "StepTimer.h"
 
 namespace BaseFramework {

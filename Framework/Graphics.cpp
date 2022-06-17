@@ -85,6 +85,15 @@ Graphics::Graphics(int width, int height, HWND hwnd)
     viewport.MinDepth = 0;
     viewport.MaxDepth = 1.0f;
     pContext->RSSetViewports(1u, &viewport);
+
+    CD3D11_RASTERIZER_DESC rastDesc = {};
+    rastDesc.CullMode = D3D11_CULL_NONE;
+    rastDesc.FillMode = D3D11_FILL_SOLID;
+
+    ID3D11RasterizerState* rastState;
+    pDevice->CreateRasterizerState(&rastDesc, &rastState);
+
+    pContext->RSSetState(rastState);
 }
 
 void Graphics::Present()

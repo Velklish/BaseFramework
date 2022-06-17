@@ -13,7 +13,7 @@
 #include "SphereComponent.h"
 #include "CubeComponent.h"
 #include "Framework/FPSCamera.h"
-#include "GridComponent.h"
+#include "Framework/GridComponent.h"
 #include "Framework/OrbitalCamera.h"
 
 namespace SolarGame
@@ -32,7 +32,7 @@ namespace SolarGame
 	private:
 		void HandleInput() override;
 		SphereComponent* sphere;
-		GridComponent* grid;
+		BaseFramework::GridComponent* grid;
 		std::vector<CubeComponent*> cubes;
 
 		BaseFramework::FPSCamera* fpsCamera;

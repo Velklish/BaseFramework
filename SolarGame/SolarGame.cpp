@@ -6,10 +6,10 @@ using namespace DirectX::SimpleMath;
 
 void SolarGame::SolarGame::Initialize(int width, int height, LPCWSTR name)
 {
-	this->window = new BaseFramework::Window(width, height, L"Pong", this);
+	this->window = new BaseFramework::Window(width, height, name, this);
 	this->gfx = new BaseFramework::Graphics(width, height, window->GetHwnd());
 	this->sphere = new SphereComponent();
-	this->grid = new GridComponent();
+	this->grid = new BaseFramework::GridComponent();
 	
 	for(int i = 0; i < 7; i++)
 	{
@@ -74,9 +74,8 @@ void SolarGame::SolarGame::Update(BaseFramework::DX::StepTimer const& timer)
 	components.at(4)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(4)->Update(components.at(0)->GetWorld(), m_view, m_proj);
 	
-	
-	components.at(5)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(5)->Translate(-1, 0, 0);
+	components.at(5)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
 	components.at(5)->Update(components.at(3)->GetWorld(), m_view, m_proj);
 	components.at(6)->Translate(1, 0, 0);
 	components.at(6)->Rotate(BaseFramework::XYZGameComponent::RotDirection::Y, time * 40.f);
