@@ -110,7 +110,7 @@ void SolarGame::CubeComponent::Update(Matrix m_world, Matrix m_view, Matrix m_pr
 {
     this->m_view = m_view;
     this->m_proj = m_proj;
-    this->m_world = (tempMatrix.Invert() * m_world);
+    this->m_world = (tempMatrix * Matrix::CreateTranslation(m_world.Translation()));
     tempMatrix = Matrix::Identity;
 }
 

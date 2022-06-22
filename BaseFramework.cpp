@@ -1,8 +1,8 @@
+#include "Framework/pch.h"
 #include "SolarGame/SolarGame.h"
 #include "PongGame/PongGame.h"
 #include <iostream>
-
-#include "Framework/pch.h"
+#include "LightGame/LightGame.h"
 using namespace BaseFramework;
 
 int CALLBACK WinMain(
@@ -13,9 +13,10 @@ int CALLBACK WinMain(
 {
 	try
 	{
-		//auto game = new PongGame();
-		auto game = new SolarGame::SolarGame();
-		game->Initialize(600, 800);
+		//auto game = new PongGame::PongGame();
+		//auto game = new SolarGame::SolarGame();
+		auto game = new LightGame::LightGame();
+		game->Initialize(800, 600);
 	}
 	catch(::DX::com_exception& e)
 	{
