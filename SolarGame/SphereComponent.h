@@ -6,19 +6,19 @@
 
 namespace SolarGame
 {
-	class SphereComponent : public BaseFramework::XYZGameComponent
+	class SphereComponent : public Framework::XYZGameComponent
 	{
 	public:
 		// Inherited via XYZGameComponent
-		void Initialize(BaseFramework::IGame* game) override;
-		void Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view, DirectX::SimpleMath::Matrix m_proj) override;
+		void Initialize(Framework::IGame* game) override;
+		void Update(Framework::Transform transform) override;
 		void Draw() override;
 		void ClearResources() override;
 		DirectX::SimpleMath::Matrix GetWorld() override { return m_world; };
 		void Rotate(RotDirection direction, float angle) override;
 		void Translate(float x, float y, float z) override;
 	private:
-		BaseFramework::IGame* instance;
+		Framework::IGame* instance;
 
 		DirectX::SimpleMath::Matrix tempMatrix = DirectX::SimpleMath::Matrix::Identity;
 		

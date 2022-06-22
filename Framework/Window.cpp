@@ -5,7 +5,7 @@
 #include "Framework/IGame.h"
 
 using namespace DirectX;
-using namespace BaseFramework;
+using namespace Framework;
 
 Window::Window(int width, int height, LPCWSTR name, IGame* instance) :
     instance(instance)
@@ -68,7 +68,7 @@ void Window::GetSize(int& width, int& height) {
     width = this->width;
     height = this->height;
 }
-
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
     // use create parameter passed in from CreateWindow() to store window class pointer at WinAPI side
@@ -96,8 +96,6 @@ LRESULT CALLBACK Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPAR
     return pWnd->HandleMsg(hWnd, msg, wParam, lParam);
 }
 
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 LRESULT CALLBACK Window::HandleMsg(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) noexcept
 {
     static bool s_in_sizemove = false;
@@ -107,9 +105,9 @@ LRESULT CALLBACK Window::HandleMsg(HWND hWnd, UINT message, WPARAM wParam, LPARA
 
     auto game = this->instance;
 
-    if (ImGui_ImplWin32_WndProcHandler(hwnd, message, wParam, lParam))
-        return true;
-
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    
     switch (message)
     {
     case WM_GETMINMAXINFO:

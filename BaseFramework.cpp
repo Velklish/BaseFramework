@@ -3,7 +3,7 @@
 #include "PongGame/PongGame.h"
 #include <iostream>
 #include "LightGame/LightGame.h"
-using namespace BaseFramework;
+using namespace Framework;
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "ConstBuffers.h"
 #include "Mesh.h"
 #include "Texture.h"
 #include "Vertex.h"
@@ -14,15 +15,14 @@
 #include "Framework/VertexBuffer.h"
 #include "Framework/XYZGameComponent.h"
 
-namespace BaseFramework
+namespace Framework
 {
     class Model : public XYZGameComponent
     {
     public:
         Model(const std::string& string, float size = 1.0f);
         void Initialize(IGame* game) override;
-        void Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view,
-            DirectX::SimpleMath::Matrix m_proj) override;
+        void Update(Transform transform) override;
         void Draw() override;
         void ClearResources() override;
         void Rotate(RotDirection direction, float angle) override;
@@ -33,8 +33,8 @@ namespace BaseFramework
         ID3D11DeviceContext * context = nullptr;
         std::vector<Mesh> meshes;
 
-        void ProcessNode(aiNode * node, const aiScene * scene);
-        Mesh ProcessMesh(aiMesh * mesh, const aiScene * scene);
+        void ProcessNode(aiNode * node, const aiScene * scene, DirectX::SimpleMath::Matrix parentTransformMatrix);
+        Mesh ProcessMesh(aiMesh * mesh, const aiScene * scene, DirectX::SimpleMath::Matrix transformMatrix);
         TextureStorageType DetermineTextureStorageType(const aiScene* pScene, aiMaterial* pMat, unsigned int index, aiTextureType textureType);
         std::vector<Texture> LoadMaterialTextures(aiMaterial* pMaterial, aiTextureType textureType, const aiScene* pScene);
         int GetTextureIndex(aiString* pStr);
@@ -44,7 +44,7 @@ namespace BaseFramework
 
         std::string assetPath;
 
-        ConstantBuffer<DirectX::SimpleMath::Matrix> pConstBuffer;
+        ConstantBuffer<ConstBuffers::VSVertex> pConstBuffer;
         IndexBuffer pIndexBuffer;
         VertexBuffer<Vertex> pVertexBuffer;
         PixelShader pPixelShader;

@@ -1,11 +1,11 @@
 #pragma once
 #include "Forward.h"
 
-namespace BaseFramework {
+namespace Framework {
 	class Window
 	{
 	public:
-		Window(int width, int height, LPCWSTR name, BaseFramework::IGame* instance);
+		Window(int width, int height, LPCWSTR name, Framework::IGame* instance);
 		void InitializeMessageLoop();
 		void GetSize(int& width, int& height);
 		HWND GetHwnd() { return hwnd; };

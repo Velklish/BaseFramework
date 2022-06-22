@@ -10,7 +10,7 @@ using namespace DirectX::SimpleMath;
 
 SolarGame::CubeComponent::CubeComponent(float size) : size(size){}
 
-void SolarGame::CubeComponent::Initialize(BaseFramework::IGame* game)
+void SolarGame::CubeComponent::Initialize(Framework::IGame* game)
 {
     this->instance = game;
 
@@ -106,11 +106,11 @@ void SolarGame::CubeComponent::Initialize(BaseFramework::IGame* game)
     device->CreateInputLayout(inputElements, std::size(inputElements), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout);
 }
 
-void SolarGame::CubeComponent::Update(Matrix m_world, Matrix m_view, Matrix m_proj)
+void SolarGame::CubeComponent::Update(Framework::Transform transform)
 {
-    this->m_view = m_view;
-    this->m_proj = m_proj;
-    this->m_world = (tempMatrix * Matrix::CreateTranslation(m_world.Translation()));
+    this->m_view = transform.view;
+    this->m_proj = transform.proj;
+    this->m_world = (tempMatrix * Matrix::CreateTranslation(transform.world.Translation()));
     tempMatrix = Matrix::Identity;
 }
 

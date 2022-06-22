@@ -1,8 +1,9 @@
 #pragma once
 #include <SimpleMath.h>
 #include "Forward.h"
+#include "Transform.h"
 
-namespace BaseFramework 
+namespace Framework 
 {
 	class XYZGameComponent
 	{
@@ -15,7 +16,7 @@ namespace BaseFramework
 		};
 		
 		virtual void Initialize(IGame* game) = 0;
-		virtual void Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view, DirectX::SimpleMath::Matrix m_proj) = 0;
+		virtual void Update(Transform transform) = 0;
 		virtual void Draw() = 0;
 		virtual void ClearResources() = 0;
 		virtual void Rotate(RotDirection direction, float angle) = 0;

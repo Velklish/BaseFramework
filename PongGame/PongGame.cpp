@@ -2,7 +2,7 @@
 #include "Framework/Window.h"
 #include "Framework/Graphics.h"
 
-using namespace BaseFramework;
+using namespace Framework;
 
 PongGame::PongGame::PongGame()
 {
@@ -39,7 +39,7 @@ void PongGame::PongGame::Initialize(int width, int height, LPCWSTR name)
 	this->m_timer.SetTargetElapsedSeconds(1.0 / 144);
 }
 
-void PongGame::PongGame::Update(BaseFramework::DX::StepTimer const& timer)
+void PongGame::PongGame::Update(Framework::DX::StepTimer const& timer)
 {
 	HandleInput();
 

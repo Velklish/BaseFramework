@@ -8,7 +8,7 @@
 
 #include "Framework/XYZGameComponent.h"
 
-namespace BaseFramework
+namespace Framework
 {
     class GridComponent
     {

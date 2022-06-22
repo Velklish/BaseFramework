@@ -8,11 +8,10 @@
 #include "Framework/Graphics.h"
 #include "Framework/IGame.h"
 #include "Framework/VertexBuffer.h"
-#include "Framework/Color.h"
 
 using namespace DirectX::SimpleMath;
 
-namespace BaseFramework
+namespace Framework
 {
 	namespace Colors
 	{
@@ -25,7 +24,7 @@ namespace BaseFramework
         assetPath = path;
     }
 
-    void Model::Initialize(BaseFramework::IGame* game)
+    void Model::Initialize(Framework::IGame* game)
     {
         this->instance = game;
         auto graphics = instance->GetGfx();
@@ -41,13 +40,15 @@ namespace BaseFramework
 													aiProcess_Triangulate |
 													aiProcess_ConvertToLeftHanded);
 
-    	this->ProcessNode(pScene->mRootNode, pScene);
+    	this->ProcessNode(pScene->mRootNode, pScene, Matrix::Identity);
 
     	pConstBuffer.Initialize(device.Get(), context.Get());
         D3D11_INPUT_ELEMENT_DESC layout[] =
         {
             {"POSITION", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
             {"TEXCOORD", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
+			{"NORMAL", 0, DXGI_FORMAT::DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA, 0  },
+ 
         };
 
         UINT numElements = ARRAYSIZE(layout);
@@ -56,22 +57,19 @@ namespace BaseFramework
         pPixelShader.Initialize(device,  + L"PSModel.cso");
     }
 
-    void BaseFramework::Model::Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view,
-        DirectX::SimpleMath::Matrix m_proj)
+    void Framework::Model::Update(Transform transform)
     {
-        this->m_view = m_view;
-        this->m_proj = m_proj;
-        this->m_world = (tempMatrix.Invert() * DirectX::SimpleMath::Matrix::CreateTranslation(m_world.Translation()));
+        this->m_view = transform.view;
+        this->m_proj = transform.proj;
+        this->m_world = (tempMatrix.Invert() * DirectX::SimpleMath::Matrix::CreateTranslation(transform.world.Translation()));
         tempMatrix = Matrix::Identity;
     }
 
-    void BaseFramework::Model::Draw()
+    void Framework::Model::Draw()
     {
         auto graphics = instance->GetGfx();
         auto context = graphics->GetContext();
-
-        pConstBuffer.data = (m_world * m_view * m_proj).Transpose();
-        pConstBuffer.ApplyChanges();
+		//pConstBuffer.data.wvpMatrix = (m_world * m_view * m_proj).Transpose();
         context->VSSetConstantBuffers(0, 1u, pConstBuffer.GetAddressOf());
 
         context->VSSetShader(pVertexShader.GetShader(), nullptr, 0u);
@@ -81,37 +79,43 @@ namespace BaseFramework
 
     	for (int i = 0; i < meshes.size(); i++)
     	{
+    		pConstBuffer.data.wvpMatrix = (meshes[i].GetTransform() * m_world * m_view * m_proj).Transpose();
+    		pConstBuffer.data.worldMatrix = (meshes[i].GetTransform() * m_world ).Transpose();
+    		pConstBuffer.ApplyChanges();
     		meshes[i].Draw();
     	}
     }
 
-    void BaseFramework::Model::ClearResources()
+    void Framework::Model::ClearResources()
     {
     }
 
-    void BaseFramework::Model::Rotate(RotDirection direction, float angle)
+    void Framework::Model::Rotate(RotDirection direction, float angle)
     {
+		tempMatrix*=Matrix::CreateRotationY(DirectX::XMConvertToRadians(angle));
     }
 
-    void BaseFramework::Model::Translate(float x, float y, float z)
+    void Framework::Model::Translate(float x, float y, float z)
     {
+		tempMatrix*=Matrix::CreateTranslation(x, y, z);
     }
 
-    void Model::ProcessNode(aiNode * node, const aiScene * scene)
+    void Model::ProcessNode(aiNode * node, const aiScene * scene, Matrix parentTransformMatrix)
 	{
+		Matrix transform = Matrix(&node->mTransformation.a1).Transpose() * parentTransformMatrix;
 		for (UINT i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			meshes.push_back(this->ProcessMesh(mesh, scene));
+			meshes.push_back(this->ProcessMesh(mesh, scene, transform));
 		}
 
 		for (UINT i = 0; i < node->mNumChildren; i++)
 		{
-			this->ProcessNode(node->mChildren[i], scene);
+			this->ProcessNode(node->mChildren[i], scene, transform);
 		}
 	}
 
-	Mesh Model::ProcessMesh(aiMesh * mesh, const aiScene * scene)
+	Mesh Model::ProcessMesh(aiMesh * mesh, const aiScene * scene, DirectX::SimpleMath::Matrix transformMatrix)
 	{
 		// Data to fill
 		std::vector<Vertex> vertices;
@@ -126,9 +130,9 @@ namespace BaseFramework
 			vertex.position.y = mesh->mVertices[i].y * size;
 			vertex.position.z = mesh->mVertices[i].z * size;
 
-			/*vertex.normal.x = mesh->mNormals[i].x;
+			vertex.normal.x = mesh->mNormals[i].x;
 			vertex.normal.y = mesh->mNormals[i].y;
-			vertex.normal.z = mesh->mNormals[i].z;*/
+			vertex.normal.z = mesh->mNormals[i].z;
 
 			if (mesh->mTextureCoords[0])
 			{
@@ -150,10 +154,11 @@ namespace BaseFramework
 
 		std::vector<Texture> textures;
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		auto test = material->mProperties;
 		std::vector<Texture> diffuseTextures = LoadMaterialTextures(material, aiTextureType::aiTextureType_DIFFUSE, scene);
 		textures.insert(textures.end(), diffuseTextures.begin(), diffuseTextures.end());
 
-		return Mesh(this->device, this->context, vertices, indices, textures);
+		return Mesh(this->device, this->context, vertices, indices, textures, transformMatrix);
 	}
 
 	TextureStorageType Model::DetermineTextureStorageType(const aiScene * pScene, aiMaterial * pMat, unsigned int index, aiTextureType textureType)

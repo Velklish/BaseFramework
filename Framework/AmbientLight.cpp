@@ -4,12 +4,12 @@
 #include "Graphics.h"
 #include "IGame.h"
 
-namespace BaseFramework
+namespace Framework
 {
-    AmbientLight::AmbientLight(DirectX::SimpleMath::Vector3 color, float strength) : data(color, strength)
+    AmbientLight::AmbientLight(DirectX::XMFLOAT3 color, float strength) : data(color, strength)
     {}
 
-    void AmbientLight::Initialize(BaseFramework::IGame* instance)
+    void AmbientLight::Initialize(Framework::IGame* instance)
     {
         this->graphics = instance->GetGfx();
         auto context = graphics->GetContext();
@@ -20,7 +20,7 @@ namespace BaseFramework
         pConstBuffer.ApplyChanges();
     }
 
-    void AmbientLight::Update(DirectX::SimpleMath::Vector3 color, float strength)
+    void AmbientLight::Update(DirectX::XMFLOAT3 color, float strength)
     {
         this->data = ConstBuffers::PSAmbient(color, strength);
         pConstBuffer.data = data;
@@ -30,7 +30,8 @@ namespace BaseFramework
     void AmbientLight::Draw()
     {
         auto context = graphics->GetContext();
+        pConstBuffer.data = data;
         pConstBuffer.ApplyChanges();
-        context->PSSetConstantBuffers(0,1u,pConstBuffer.GetAddressOf());
+        context->PSSetConstantBuffers(1,1u,pConstBuffer.GetAddressOf());
     }
 }

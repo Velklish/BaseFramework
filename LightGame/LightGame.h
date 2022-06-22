@@ -11,36 +11,45 @@
 #include "Framework/XYZGameComponent.h"
 #include "Framework/GridComponent.h"
 #include "Framework/Model.h"
+#include "Framework/PointLight.h"
+#include "Framework/Transform.h"
 
 namespace LightGame
 {
-    class LightGame : BaseFramework::IGame
+    class LightGame : Framework::IGame
     {
     public:
         void Initialize(int width, int height, LPCWSTR name = L"LightGame") override;
-        void Update(BaseFramework::DX::StepTimer const& timer) override;
+        void Update(Framework::DX::StepTimer const& timer) override;
         void Render() override;
         void Tick() override;
-        BaseFramework::Graphics* GetGfx() override;
-        BaseFramework::Window* GetWindow() override;
+        Framework::Graphics* GetGfx() override;
+        Framework::Window* GetWindow() override;
         void ClearResources() override;
+        Framework::Transform GetWorldTransform() override;
     private:
         void HandleInput() override;
 
-        BaseFramework::GridComponent* grid;
+        Framework::GridComponent* grid;
 
-        BaseFramework::FPSCamera* fpsCamera;
-        BaseFramework::OrbitalCamera* orbitalCamera;
-        BaseFramework::Model* donutModel;
-        BaseFramework::AmbientLight* ambientLight;
+        Framework::FPSCamera* fpsCamera;
+        Framework::OrbitalCamera* orbitalCamera;
+        Framework::Model* model;
+        Framework::Model* model2;
+        Framework::AmbientLight* ambientLight;
+        Framework::PointLight* dynamicLight;
 
         std::unique_ptr<DirectX::Keyboard> keyboard;
         std::unique_ptr<DirectX::Mouse> mouse;
-        BaseFramework::Window* window;
-        BaseFramework::DX::StepTimer m_timer;
+        Framework::Window* window;
+        Framework::DX::StepTimer m_timer;
 
-        std::vector<BaseFramework::XYZGameComponent*> components;
+        std::vector<Framework::XYZGameComponent*> components;
 
-        BaseFramework::Graphics* gfx;
+        Framework::Graphics* gfx;
+
+        DirectX::SimpleMath::Matrix m_world;
+        DirectX::SimpleMath::Matrix m_view;
+        DirectX::SimpleMath::Matrix m_proj;
     };
 }

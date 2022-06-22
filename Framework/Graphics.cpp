@@ -1,7 +1,7 @@
 #include "Framework/Graphics.h"
 #include "Framework/pch.h"
 
-using namespace BaseFramework;
+using namespace Framework;
 
 Graphics::Graphics(int width, int height, HWND hwnd)
 {
@@ -103,7 +103,8 @@ void Graphics::Present()
 
 void Graphics::ClearBuffer()
 {
-    const float color[] = { 0.145, 0.474, 0.831, 1 };
+    //const float color[] = { 0.145, 0.474, 0.831, 1 };
+    const float color[] = { 0, 0, 0, 1 };
     pContext->ClearRenderTargetView(pTarget.Get(), color);
     pContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
     pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), pDepthStencilView.Get());

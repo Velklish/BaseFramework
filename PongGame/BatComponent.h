@@ -6,12 +6,12 @@
 
 namespace PongGame
 {
-	class BatComponent : public BaseFramework::GameComponent
+	class BatComponent : public Framework::GameComponent
 	{
 	public:
 		// Inherited via GameComponent
 		BatComponent(float sizeX, float sizeY, float posX, float posY);
-		void Initialize(BaseFramework::IGame* game) override;
+		void Initialize(Framework::IGame* game) override;
 		void Update() override;
 		void Draw() override;
 		void Translate(float x, float y);
@@ -22,7 +22,7 @@ namespace PongGame
 	private:
 		DirectX::SimpleMath::Vector2 velocity = {0.02f,0.02f};
 		DirectX::SimpleMath::Vector2 size {};
-		BaseFramework::IGame* instance;
+		Framework::IGame* instance;
 		std::vector<DirectX::SimpleMath::Vector2> vertices{};
 		std::vector<int> indices{};
 

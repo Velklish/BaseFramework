@@ -1,7 +1,8 @@
 #pragma once
 
-namespace BaseFramework {
+namespace Framework {
 	class IGame;
 	class Window;
 	class Graphics;
+	struct Transform;
 }

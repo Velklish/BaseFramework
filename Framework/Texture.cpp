@@ -4,7 +4,7 @@
 
 #include "StringHelper.h"
 
-namespace BaseFramework
+namespace Framework
 {
 	using namespace DirectX::SimpleMath;
 

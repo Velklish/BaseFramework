@@ -2,8 +2,9 @@
 #include "Forward.h"
 #include "pch.h"
 #include "StepTimer.h"
+#include "Transform.h"
 
-namespace BaseFramework {
+namespace Framework {
     class IGame
     {
     public:
@@ -20,6 +21,8 @@ namespace BaseFramework {
         virtual Window* GetWindow() = 0;
 
         virtual void ClearResources() = 0;
+
+        virtual Transform GetWorldTransform() = 0;
     private:
         virtual void HandleInput() = 0;
     };

@@ -9,18 +9,18 @@ using namespace SimpleMath;
 
 namespace
 {
-    const Vector3 START_POSITION = { 0.f, 1.5f, -5.5f};
+    const Vector3 START_POSITION = { 0.f, 1.5f, 5.5f};
     constexpr float ROTATION_GAIN = 0.004f;
     constexpr float MOVEMENT_GAIN = 0.07f;
 }
 
-BaseFramework::FPSCamera::FPSCamera(
+Framework::FPSCamera::FPSCamera(
     IGame* instance,
     std::unique_ptr<Keyboard>& keyboard,
     std::unique_ptr<Mouse>& mouse)
     :
     m_pitch(0),
-    m_yaw(0),
+    m_yaw(3.14159f),
     m_cameraPos(START_POSITION)
 {
     this->instance = instance;
@@ -38,7 +38,7 @@ BaseFramework::FPSCamera::FPSCamera(
         float(width) / float(height), 0.01f, 100.f);
 }
 
-void BaseFramework::FPSCamera::Update(Matrix& m_view, Matrix& m_proj)
+void Framework::FPSCamera::Update(Matrix& m_view, Matrix& m_proj)
 {
     auto mouse = this->mouse->GetState();
 

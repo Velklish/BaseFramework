@@ -18,7 +18,7 @@ namespace
     constexpr float c_maxRadius = 5.f;
 }
 
-BaseFramework::OrbitalCamera::OrbitalCamera(
+Framework::OrbitalCamera::OrbitalCamera(
     IGame* instance,
     std::unique_ptr<Keyboard>& keyboard,
     std::unique_ptr<Mouse>& mouse)
@@ -41,7 +41,7 @@ BaseFramework::OrbitalCamera::OrbitalCamera(
         float(width) / float(height), 0.01f, 100.f);
 }
 
-void BaseFramework::OrbitalCamera::Update(Matrix& m_view, Matrix& m_proj)
+void Framework::OrbitalCamera::Update(Matrix& m_view, Matrix& m_proj)
 {
     auto mouse = this->mouse->GetState();
     

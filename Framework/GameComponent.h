@@ -1,7 +1,7 @@
 #pragma once
 #include "Forward.h"
 
-namespace BaseFramework {
+namespace Framework {
 	class GameComponent
 	{
 	public:

@@ -8,7 +8,7 @@
 using namespace DirectX;
 using namespace SimpleMath;
 
-void BaseFramework::GridComponent::Initialize(BaseFramework::IGame* game, float size)
+void Framework::GridComponent::Initialize(Framework::IGame* game, float size)
 {
     this->instance = game;
     this->size = size;
@@ -35,7 +35,7 @@ void BaseFramework::GridComponent::Initialize(BaseFramework::IGame* game, float 
     m_effect->SetProjection(m_proj);
 }
 
-void BaseFramework::GridComponent::Update(Matrix m_view,
+void Framework::GridComponent::Update(Matrix m_view,
     Matrix m_proj)
 {
     this->m_view = m_view;
@@ -45,7 +45,7 @@ void BaseFramework::GridComponent::Update(Matrix m_view,
     m_effect->SetProjection(m_proj);
 }
 
-void BaseFramework::GridComponent::Draw()
+void Framework::GridComponent::Draw()
 {
     auto context = this->instance->GetGfx()->GetContext();
     context->OMSetBlendState(m_states->Opaque(), nullptr, 0xFFFFFFFF);
@@ -92,6 +92,6 @@ void BaseFramework::GridComponent::Draw()
     m_batch->End();
 }
 
-void BaseFramework::GridComponent::ClearResources()
+void Framework::GridComponent::ClearResources()
 {
 }

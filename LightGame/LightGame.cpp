@@ -1,6 +1,7 @@
 ﻿#include "LightGame.h"
 
 #include "Framework/Graphics.h"
+#include "Framework/PointLight.h"
 #include "Framework/Window.h"
 #include "ImGUI/imgui.h"
 #include "ImGUI/imgui_impl_win32.h"
@@ -12,20 +13,24 @@ namespace LightGame
 {
     void LightGame::Initialize(int width, int height, LPCWSTR name)
     {
-        this->window = new BaseFramework::Window(width, height, name, this);
-        this->gfx = new BaseFramework::Graphics(width, height, window->GetHwnd());
-        this->grid = new BaseFramework::GridComponent();
-        this->donutModel = new BaseFramework::Model(std::string("Models/character.fbx"), 0.02f);
-        this->ambientLight = new BaseFramework::AmbientLight(Vector3(1,1,0),0.2);
+        this->window = new Framework::Window(width, height, name, this);
+        this->gfx = new Framework::Graphics(width, height, window->GetHwnd());
+        this->grid = new Framework::GridComponent();
+        this->model = new Framework::Model(std::string("Models/character.fbx"), 0.02f);
+        this->model2 = new Framework::Model(std::string("Models/lamp.fbx"), 0.02f);
+        this->ambientLight = new Framework::AmbientLight(DirectX::XMFLOAT3(1,1,1),1);
+        this->dynamicLight = new Framework::PointLight(DirectX::XMFLOAT3(1,1,1),1,Vector3(0,0,0));
 	
         keyboard = std::make_unique<DirectX::Keyboard>();
         mouse = std::make_unique<DirectX::Mouse>();
 
-        this->fpsCamera = new BaseFramework::FPSCamera(this, keyboard, mouse);
-        this->orbitalCamera = new BaseFramework::OrbitalCamera(this, keyboard, mouse);
+        this->fpsCamera = new Framework::FPSCamera(this, keyboard, mouse);
+        this->orbitalCamera = new Framework::OrbitalCamera(this, keyboard, mouse);
         this->grid->Initialize(this, 12.0f);
-        this->donutModel->Initialize(this);
+        this->model->Initialize(this);
+        this->model2->Initialize(this);
         this->ambientLight->Initialize(this);
+        this->dynamicLight->Initialize(this);
 
         for (auto comp : components) {
             comp->Initialize(this);
@@ -41,12 +46,8 @@ namespace LightGame
         this->window->InitializeMessageLoop();
     }
 
-    void LightGame::Update(BaseFramework::DX::StepTimer const& timer)
+    void LightGame::Update(Framework::DX::StepTimer const& timer)
     {
-        Matrix m_world = Matrix::Identity;
-        Matrix m_view;
-        Matrix m_proj;
-
         if(keyboard->GetState().LeftAlt)
         {
             orbitalCamera->Update(m_view,m_proj);
@@ -57,7 +58,12 @@ namespace LightGame
         }
 	
         grid->Update(m_view, m_proj);
-        donutModel->Update(m_world,m_view,m_proj);
+        model->Translate(-1,-1,0);
+        model->Update(GetWorldTransform());
+        //model2->Update(GetWorldTransform());
+        dynamicLight->Update();
+        auto time = static_cast<float>(timer.GetTotalSeconds());
+        //model->Rotate(Framework::XYZGameComponent::RotDirection::Y, time * 40.f);
     }
 
     void LightGame::Render()
@@ -65,26 +71,37 @@ namespace LightGame
         gfx->ClearBuffer();
         
         grid->Draw();
-        donutModel->Draw();
+        model->Draw();
+        //model2->Draw();
 
         for (auto comp : components) {
             comp->Draw();
         }
 
+        ambientLight->Draw();
+        dynamicLight->Draw();
+
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
         //Create ImGui Test Window
-        ImGui::Begin("Light Controls");
+        ImGui::Begin("Ambient Light");
         ImGui::DragFloat3("Ambient Light Color", &ambientLight->data.color.x, 0.01f, 0.0f, 1.0f);
         ImGui::DragFloat("Ambient Light Strength", &ambientLight->data.lightStrength, 0.01f, 0.0f, 1.0f);
+        ImGui::End();
+
+        ImGui::Begin("Dynamic Light");
+        ImGui::DragFloat3("Dynamic Light Position", &dynamicLight->data.position.x, 0.01f, -10.0f, 10.0f);
+        ImGui::DragFloat3("Dynamic Light Color", &dynamicLight->data.color.x, 0.01f, 0.0f, 1.0f);
+        ImGui::DragFloat("Dynamic Light Strength", &dynamicLight->data.lightStrength, 0.01f, 0.0f, 1.0f);
+
         ImGui::End();
         //Assemble Together Draw Data
         ImGui::Render();
         //Render Draw Data
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-        
-        ambientLight->Draw();
+
+
 
         gfx->Present();
     }
@@ -99,18 +116,23 @@ namespace LightGame
         Render();
     }
 
-    BaseFramework::Graphics* LightGame::GetGfx()
+    Framework::Graphics* LightGame::GetGfx()
     {
         return gfx;
     }
 
-    BaseFramework::Window* LightGame::GetWindow()
+    Framework::Window* LightGame::GetWindow()
     {
         return  window;
     }
 
     void LightGame::ClearResources()
     {
+    }
+
+    Framework::Transform LightGame::GetWorldTransform() 
+    {
+        return Framework::Transform(m_view,m_proj,m_world);
     }
 
     void LightGame::HandleInput()

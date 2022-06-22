@@ -12,17 +12,17 @@
 
 namespace PongGame 
 {
-	class PongGame : public BaseFramework::IGame
+	class PongGame : public Framework::IGame
 	{
 	public:
 		PongGame();
 		// Inherited via Game
 		void Initialize(int width, int height, LPCWSTR name = L"Pong") override;
-		void Update(BaseFramework::DX::StepTimer const& timer) override;
+		void Update(Framework::DX::StepTimer const& timer) override;
 		void Render() override;
 		void Tick() override;
-		BaseFramework::Graphics* GetGfx() override { return gfx; }
-		BaseFramework::Window* GetWindow() override { return window; }
+		Framework::Graphics* GetGfx() override { return gfx; }
+		Framework::Window* GetWindow() override { return window; }
 		void ClearResources() override;
 
 		~PongGame();
@@ -32,17 +32,17 @@ namespace PongGame
 
 		std::unique_ptr<DirectX::Keyboard> keyboard;
 		std::unique_ptr<DirectX::Mouse> mouse;
-		BaseFramework::Window* window;
-		BaseFramework::DX::StepTimer m_timer;
+		Framework::Window* window;
+		Framework::DX::StepTimer m_timer;
 		
-		std::vector<BaseFramework::GameComponent*> components;
+		std::vector<Framework::GameComponent*> components;
 		DirectX::SimpleMath::Rectangle collision {-1,1,1,1};
 
 		BatComponent* playerBat;
 		BatComponent* enemyBat;
 		BallComponent* ball;
 
-		BaseFramework::Graphics* gfx;
+		Framework::Graphics* gfx;
 	};
 }
 

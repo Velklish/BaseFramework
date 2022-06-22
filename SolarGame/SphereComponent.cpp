@@ -6,7 +6,7 @@
 
 using namespace DirectX::SimpleMath;
 
-void SolarGame::SphereComponent::Initialize(BaseFramework::IGame* game)
+void SolarGame::SphereComponent::Initialize(Framework::IGame* game)
 {
 	this->instance = game;
     m_shape = DirectX::GeometricPrimitive::CreateSphere(instance->GetGfx()->GetContext().Get(), 0.5f);
@@ -21,11 +21,11 @@ void SolarGame::SphereComponent::Initialize(BaseFramework::IGame* game)
         float(width) / float(height), 0.1f, 10.f);
 }
 
-void SolarGame::SphereComponent::Update(DirectX::SimpleMath::Matrix m_world, DirectX::SimpleMath::Matrix m_view, DirectX::SimpleMath::Matrix m_proj)
+void SolarGame::SphereComponent::Update(Framework::Transform transform)
 {
-    this->m_view = m_view;
-    this->m_proj = m_proj;
-    this->m_world = tempMatrix * m_world;
+    this->m_view = transform.view;
+    this->m_proj = transform.proj;
+    this->m_world = tempMatrix * transform.world;
     tempMatrix = Matrix::Identity;
 }
 

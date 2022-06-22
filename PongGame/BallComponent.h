@@ -6,7 +6,7 @@
 
 namespace PongGame
 {
-    class BallComponent : public BaseFramework::GameComponent
+    class BallComponent : public Framework::GameComponent
     {
     public:
         enum BounceDirection
@@ -16,7 +16,7 @@ namespace PongGame
         };
         
         BallComponent(float sizeX, float sizeY, float posX, float posY);
-        void Initialize(BaseFramework::IGame* game) override;
+        void Initialize(Framework::IGame* game) override;
         void Update() override;
         void Draw() override;
 
@@ -40,7 +40,7 @@ namespace PongGame
         int screenWidth;
         int screenHeight;
 
-        BaseFramework::IGame* instance;
+        Framework::IGame* instance;
         
         Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer = nullptr;
         Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixelShader = nullptr;

@@ -1,12 +1,25 @@
 ﻿#pragma once
-#include <DirectXCollision.h>
 #include <SimpleMath.h>
 
 namespace ConstBuffers
 {
     struct PSAmbient
     {
-        DirectX::SimpleMath::Vector3 color;
+        DirectX::XMFLOAT3 color;
         float lightStrength;
+
+    };
+
+    struct VSVertex
+    {
+        DirectX::SimpleMath::Matrix wvpMatrix;
+        DirectX::SimpleMath::Matrix worldMatrix;
+    };
+
+    struct PSDynamicLight
+    {
+        DirectX::XMFLOAT3 color;
+        float lightStrength;
+        DirectX::SimpleMath::Vector3 position; 
     };
 }

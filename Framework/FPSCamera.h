@@ -4,7 +4,7 @@
 #include <Mouse.h>
 #include <SimpleMath.h>
 
-namespace BaseFramework
+namespace Framework
 {
     class FPSCamera
     {

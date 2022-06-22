@@ -1,23 +1,22 @@
 ﻿#pragma once
 #include "Forward.h"
-#include "Color.h"
 #include "ConstantBuffer.h"
 #include "ConstBuffers.h"
 #include "SimpleMath.h"
 
-namespace BaseFramework
+namespace Framework
 {
     class AmbientLight
     {
     public:
-        AmbientLight(DirectX::SimpleMath::Vector3 color, float strength);
-        void Initialize(BaseFramework::IGame* instance);
-        void Update(DirectX::SimpleMath::Vector3 color, float strength);
+        AmbientLight(DirectX::XMFLOAT3 color, float strength);
+        void Initialize(Framework::IGame* instance);
+        void Update(DirectX::XMFLOAT3 color, float strength);
         void Draw();
 
         ConstBuffers::PSAmbient data;
     private:
         ConstantBuffer<ConstBuffers::PSAmbient> pConstBuffer;
-        BaseFramework::Graphics* graphics;
+        Framework::Graphics* graphics;
     };
 }

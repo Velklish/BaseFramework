@@ -10,7 +10,7 @@
 #pragma comment(lib, "D3DCompiler.lib")
 
 using namespace DirectX::SimpleMath;
-using namespace BaseFramework;
+using namespace Framework;
 
 PongGame::BatComponent::BatComponent(float sizeX, float sizeY, float posX, float posY)
 	: position(posX, posY),

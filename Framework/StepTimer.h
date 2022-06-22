@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <exception>
 #include <profileapi.h>
-namespace BaseFramework {
+namespace Framework {
     namespace DX
     {
         // Helper class for animation and simulation timing.

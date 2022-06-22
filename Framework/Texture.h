@@ -5,7 +5,7 @@
 #include <assimp/material.h>
 #include <SimpleMath.h>
 
-namespace BaseFramework
+namespace Framework
 {
     enum class TextureStorageType
     {

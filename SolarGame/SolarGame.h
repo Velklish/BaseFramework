@@ -18,34 +18,34 @@
 
 namespace SolarGame
 {
-	class SolarGame : public BaseFramework::IGame
+	class SolarGame : public Framework::IGame
 	{
 	public:
 		// Inherited via IGame
 		void Initialize(int width, int height, LPCWSTR name = L"SolarGame") override;
-		void Update(BaseFramework::DX::StepTimer const& timer) override;
+		void Update(Framework::DX::StepTimer const& timer) override;
 		void Render() override;
 		void Tick() override;
-		BaseFramework::Graphics* GetGfx() override { return gfx; }
-		BaseFramework::Window* GetWindow() override { return window; }
+		Framework::Graphics* GetGfx() override { return gfx; }
+		Framework::Window* GetWindow() override { return window; }
 		void ClearResources() override;
 	private:
 		void HandleInput() override;
 		SphereComponent* sphere;
-		BaseFramework::GridComponent* grid;
+		Framework::GridComponent* grid;
 		std::vector<CubeComponent*> cubes;
 
-		BaseFramework::FPSCamera* fpsCamera;
-		BaseFramework::OrbitalCamera* orbitalCamera;
+		Framework::FPSCamera* fpsCamera;
+		Framework::OrbitalCamera* orbitalCamera;
 
 		std::unique_ptr<DirectX::Keyboard> keyboard;
 		std::unique_ptr<DirectX::Mouse> mouse;
-		BaseFramework::Window* window;
-		BaseFramework::DX::StepTimer m_timer;
+		Framework::Window* window;
+		Framework::DX::StepTimer m_timer;
 
-		std::vector<BaseFramework::XYZGameComponent*> components;
+		std::vector<Framework::XYZGameComponent*> components;
 
-		BaseFramework::Graphics* gfx;
+		Framework::Graphics* gfx;
 	};
 }
 
