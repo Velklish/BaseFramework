@@ -92,7 +92,16 @@ Graphics::Graphics(int width, int height, HWND hwnd)
 
     ID3D11RasterizerState* rastState;
     pDevice->CreateRasterizerState(&rastDesc, &rastState);
-
+    D3D11_SAMPLER_DESC sampDesc;
+    sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+    sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+    sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+    sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+    sampDesc.MinLOD = 0;
+    sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+    pDevice->CreateSamplerState(&sampDesc, &pSamplerState);
+    pContext->PSSetSamplers(0,1,pSamplerState.GetAddressOf());
     pContext->RSSetState(rastState);
 }
 
@@ -103,9 +112,10 @@ void Graphics::Present()
 
 void Graphics::ClearBuffer()
 {
-    //const float color[] = { 0.145, 0.474, 0.831, 1 };
-    const float color[] = { 0, 0, 0, 1 };
+    const float color[] = { 0.145, 0.474, 0.831, 1 };
+    //const float color[] = { 0, 0, 0, 1 };
     pContext->ClearRenderTargetView(pTarget.Get(), color);
     pContext->ClearDepthStencilView(pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
     pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), pDepthStencilView.Get());
+    //pContext->PSSetSamplers(0,1,pSamplerState.GetAddressOf());
 }

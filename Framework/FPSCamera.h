@@ -14,6 +14,7 @@ namespace Framework
             std::unique_ptr<DirectX::Mouse>& mouse);
 
         void Update(DirectX::SimpleMath::Matrix& m_view, DirectX::SimpleMath::Matrix& m_proj);
+        DirectX::SimpleMath::Vector3 GetCameraPos() {return m_cameraPos;}
 
     private:
         IGame* instance;

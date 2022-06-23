@@ -23,6 +23,7 @@ namespace Framework
         Microsoft::WRL::ComPtr<ID3D11DeviceContext1> pContext1 = nullptr;
         Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget = nullptr;
         Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencilView = nullptr;
+        Microsoft::WRL::ComPtr<ID3D11SamplerState> pSamplerState = nullptr;
     };
 }
 

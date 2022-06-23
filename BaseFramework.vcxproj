@@ -665,6 +665,7 @@
     <ClCompile Include="ImGUI\imgui_impl_win32.cpp" />
     <ClCompile Include="ImGUI\imgui_tables.cpp" />
     <ClCompile Include="ImGUI\imgui_widgets.cpp" />
+    <ClCompile Include="KatamariGame\Katamari.cpp" />
     <ClCompile Include="LightGame\LightGame.cpp" />
     <ClCompile Include="PongGame\BallComponent.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -1147,6 +1148,7 @@
     <ClInclude Include="ImGUI\imstb_rectpack.h" />
     <ClInclude Include="ImGUI\imstb_textedit.h" />
     <ClInclude Include="ImGUI\imstb_truetype.h" />
+    <ClInclude Include="KatamariGame\Katamari.h" />
     <ClInclude Include="LightGame\LightGame.h" />
     <ClInclude Include="PongGame\BallComponent.h" />
     <ClInclude Include="PongGame\BatComponent.h" />

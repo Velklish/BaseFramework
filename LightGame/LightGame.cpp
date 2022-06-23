@@ -16,8 +16,9 @@ namespace LightGame
         this->window = new Framework::Window(width, height, name, this);
         this->gfx = new Framework::Graphics(width, height, window->GetHwnd());
         this->grid = new Framework::GridComponent();
-        this->model = new Framework::Model(std::string("Models/character.fbx"), 0.02f);
-        this->model2 = new Framework::Model(std::string("Models/lamp.fbx"), 0.02f);
+        this->model2 = new Framework::Model(std::string("Models/block.fbx"), 0.10f, std::string("Models//donut.png"));
+        this->model = new Framework::Model(std::string("Models/Character.fbx"), 0.02f);
+        
         this->ambientLight = new Framework::AmbientLight(DirectX::XMFLOAT3(1,1,1),1);
         this->dynamicLight = new Framework::PointLight(DirectX::XMFLOAT3(1,1,1),1,Vector3(0,0,0));
 	
@@ -58,9 +59,9 @@ namespace LightGame
         }
 	
         grid->Update(m_view, m_proj);
-        model->Translate(-1,-1,0);
+        model->Translate(0,0,0);
         model->Update(GetWorldTransform());
-        //model2->Update(GetWorldTransform());
+        model2->Update(GetWorldTransform());
         dynamicLight->Update();
         auto time = static_cast<float>(timer.GetTotalSeconds());
         //model->Rotate(Framework::XYZGameComponent::RotDirection::Y, time * 40.f);
@@ -72,7 +73,7 @@ namespace LightGame
         
         grid->Draw();
         model->Draw();
-        //model2->Draw();
+        model2->Draw();
 
         for (auto comp : components) {
             comp->Draw();
@@ -100,9 +101,7 @@ namespace LightGame
         ImGui::Render();
         //Render Draw Data
         ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-
-
+        
         gfx->Present();
     }
 
@@ -132,7 +131,7 @@ namespace LightGame
 
     Framework::Transform LightGame::GetWorldTransform() 
     {
-        return Framework::Transform(m_view,m_proj,m_world);
+        return Framework::Transform(m_view,m_proj,m_world, fpsCamera->GetCameraPos());
     }
 
     void LightGame::HandleInput()

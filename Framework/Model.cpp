@@ -19,7 +19,7 @@ namespace Framework
 		const Color UnhandledTextureColor(250, 0, 0);
 	}
 	
-    Model::Model(const std::string& path, float size) : size(size)
+    Model::Model(const std::string& path, float size, const std::string& texturePath) : size(size), texturePath(texturePath)
     {
         assetPath = path;
     }
@@ -41,6 +41,7 @@ namespace Framework
 													aiProcess_ConvertToLeftHanded);
 
     	this->ProcessNode(pScene->mRootNode, pScene, Matrix::Identity);
+		auto test = meshes;
 
     	pConstBuffer.Initialize(device.Get(), context.Get());
         D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -103,11 +104,18 @@ namespace Framework
     void Model::ProcessNode(aiNode * node, const aiScene * scene, Matrix parentTransformMatrix)
 	{
 		Matrix transform = Matrix(&node->mTransformation.a1).Transpose() * parentTransformMatrix;
+		auto test = scene->mNumMeshes;
 		for (UINT i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 			meshes.push_back(this->ProcessMesh(mesh, scene, transform));
 		}
+
+		/*for (UINT i = 0; i < scene->mNumMeshes; i++)
+		{
+			aiMesh* mesh = scene->mMeshes[i];
+			meshes.push_back(this->ProcessMesh(mesh, scene, transform));
+		}*/
 
 		for (UINT i = 0; i < node->mNumChildren; i++)
 		{
@@ -130,10 +138,13 @@ namespace Framework
 			vertex.position.y = mesh->mVertices[i].y * size;
 			vertex.position.z = mesh->mVertices[i].z * size;
 
-			vertex.normal.x = mesh->mNormals[i].x;
-			vertex.normal.y = mesh->mNormals[i].y;
-			vertex.normal.z = mesh->mNormals[i].z;
-
+			if(mesh->mNormals)
+			{
+				vertex.normal.x = mesh->mNormals[i].x;
+				vertex.normal.y = mesh->mNormals[i].y;
+				vertex.normal.z = mesh->mNormals[i].z;
+			}
+			
 			if (mesh->mTextureCoords[0])
 			{
 				vertex.texCoord.x = (float)mesh->mTextureCoords[0][i].x;
@@ -209,22 +220,33 @@ namespace Framework
 		std::vector<Texture> materialTextures;
 		TextureStorageType storetype = TextureStorageType::Invalid;
 		unsigned int textureCount = pMaterial->GetTextureCount(textureType);
+		aiColor3D color (0.f,0.f,0.f);
+		pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE,color);
 
 		if (textureCount == 0) //If there are no textures
 		{
 			storetype = TextureStorageType::None;
 			aiColor3D aiColor(0.0f, 0.0f, 0.0f);
-			switch (textureType)
+			if(!texturePath.empty())
 			{
-			case aiTextureType_DIFFUSE:
-				pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
-				if (aiColor.IsBlack()) //If color = black, just use grey
+				Texture diskTexture(this->device, texturePath, textureType);
+
+				materialTextures.push_back(diskTexture);
+			}
+			else
+			{
+				switch (textureType)
 				{
-					materialTextures.push_back(Texture(this->device, Colors::UnloadedTextureColor, textureType));
+				case aiTextureType_DIFFUSE:
+					pMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, aiColor);
+					if (aiColor.IsBlack()) //If color = black, just use grey
+						{
+						materialTextures.push_back(Texture(this->device, Colors::UnloadedTextureColor, textureType));
+						return materialTextures;
+						}
+					materialTextures.push_back(Texture(this->device, Color(aiColor.r, aiColor.g, aiColor.b), textureType));
 					return materialTextures;
 				}
-				materialTextures.push_back(Texture(this->device, Color(aiColor.r * 255, aiColor.g * 255, aiColor.b * 255), textureType));
-				return materialTextures;
 			}
 		}
 		else
@@ -258,8 +280,16 @@ namespace Framework
 				}
 				case TextureStorageType::Disk:
 				{
-					std::string filename = '\\' + path.C_Str();
-					Texture diskTexture(this->device, filename, textureType);
+						std::string str;
+						str.append(path.C_Str());
+						auto find_char = '\\';
+						size_t last_occurence_index = str.find_last_of(find_char);
+						
+					//std::string filename = '\\' + path.C_Str();
+						
+					std::string filename = str.substr(last_occurence_index + 1);
+					Texture diskTexture(this->device, "Models\\" + filename, textureType);
+
 					materialTextures.push_back(diskTexture);
 					break;
 				}

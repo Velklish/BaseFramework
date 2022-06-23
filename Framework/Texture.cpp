@@ -1,6 +1,8 @@
 ﻿#include "Texture.h"
 #include <WICTextureLoader.h>
 #include <DDSTextureLoader.h>
+#include <filesystem>
+#include <fstream>
 
 #include "StringHelper.h"
 
@@ -38,7 +40,9 @@ namespace Framework
 		}
 		else
 		{
-			HRESULT hr = DirectX::CreateWICTextureFromFile(device, StringHelper::StringToWide(filePath).c_str(), texture.GetAddressOf(), this->textureView.GetAddressOf());
+			auto dir = filePath.c_str();
+			auto fileName = StringHelper::StringToWide(filePath.c_str());
+			HRESULT hr = DirectX::CreateWICTextureFromFile(device, fileName.c_str(), texture.GetAddressOf(), this->textureView.GetAddressOf());
 			if (FAILED(hr))
 			{
 				this->Initialize1x1ColorTexture(device, Colors::UnloadedTextureColor, type);

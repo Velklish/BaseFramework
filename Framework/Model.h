@@ -20,7 +20,7 @@ namespace Framework
     class Model : public XYZGameComponent
     {
     public:
-        Model(const std::string& string, float size = 1.0f);
+        Model(const std::string& modelPath, float size = 1.0f, const std::string& texturePath = "");
         void Initialize(IGame* game) override;
         void Update(Transform transform) override;
         void Draw() override;
@@ -43,12 +43,15 @@ namespace Framework
         float size = 1.0f;
 
         std::string assetPath;
+        std::string texturePath;
 
         ConstantBuffer<ConstBuffers::VSVertex> pConstBuffer;
         IndexBuffer pIndexBuffer;
         VertexBuffer<Vertex> pVertexBuffer;
         PixelShader pPixelShader;
         VertexShader pVertexShader;
+
+        DirectX::SimpleMath::Vector3 position;
         
         DirectX::SimpleMath::Matrix tempMatrix = DirectX::SimpleMath::Matrix::Identity;
 		

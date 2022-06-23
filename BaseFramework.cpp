@@ -2,6 +2,8 @@
 #include "SolarGame/SolarGame.h"
 #include "PongGame/PongGame.h"
 #include <iostream>
+
+#include "KatamariGame/Katamari.h"
 #include "LightGame/LightGame.h"
 using namespace Framework;
 
@@ -16,6 +18,7 @@ int CALLBACK WinMain(
 		//auto game = new PongGame::PongGame();
 		//auto game = new SolarGame::SolarGame();
 		auto game = new LightGame::LightGame();
+		//auto game = new Katamari();
 		game->Initialize(800, 600);
 	}
 	catch(::DX::com_exception& e)

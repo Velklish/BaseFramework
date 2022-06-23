@@ -20,13 +20,13 @@ void Framework::PointLight::Initialize(Framework::IGame* instance)
         
     pConstBuffer.Initialize(device.Get(), context.Get());
     pConstBuffer.data = data;
-    pConstBuffer.data.position = - data.position;
+    pConstBuffer.data.position =  data.position;
     pConstBuffer.ApplyChanges();
 }
 
 void Framework::PointLight::Update(DirectX::SimpleMath::Vector3 color, float strength, DirectX::SimpleMath::Vector3 position)
 {
-    this->data = ConstBuffers::PSDynamicLight(color, strength, -position);
+    this->data = ConstBuffers::PSDynamicLight(color, strength, position);
     pConstBuffer.data = data;
     pConstBuffer.ApplyChanges();
     
@@ -35,9 +35,11 @@ void Framework::PointLight::Update(DirectX::SimpleMath::Vector3 color, float str
 
 void Framework::PointLight::Update()
 {
+    auto transform = game->GetWorldTransform();
+    data.viewPosition = transform.cameraPosition;
     pConstBuffer.data = data;
     pConstBuffer.ApplyChanges();
-    model->Translate(-data.position.x,-data.position.y,-data.position.z);
+    model->Translate(data.position.x,data.position.y,data.position.z);
     model->Update(game->GetWorldTransform());
 }
 

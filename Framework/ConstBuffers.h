@@ -20,6 +20,7 @@ namespace ConstBuffers
     {
         DirectX::XMFLOAT3 color;
         float lightStrength;
-        DirectX::SimpleMath::Vector3 position; 
+        DirectX::SimpleMath::Vector3 position;
+        DirectX::SimpleMath::Vector3 viewPosition; 
     };
 }

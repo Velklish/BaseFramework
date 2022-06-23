@@ -8,5 +8,6 @@ namespace Framework
         DirectX::SimpleMath::Matrix view;
         DirectX::SimpleMath::Matrix proj;
         DirectX::SimpleMath::Matrix world;
+        DirectX::SimpleMath::Vector3 cameraPosition;
     };
 }
